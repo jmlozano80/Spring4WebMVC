@@ -70,9 +70,9 @@ hs_err_pid*
 .idea/
 Spring4WebMVC.iml
 lib/
-pom.xml
-src/main/java/
-src/main/resources/
-src/main/web/
-src/main/webapp/
-src/test/
+#pom.xml
+#src/main/java/
+#src/main/resources/
+#src/main/web/
+#src/main/webapp/
+#src/test/
