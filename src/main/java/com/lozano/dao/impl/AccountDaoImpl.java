@@ -69,6 +69,26 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
+    public Set<Role> getUserRoles(String email){
+        Account account = (Account) sessionFactory.getCurrentSession()
+                .createCriteria(Account.class)
+                .add(Restrictions.eq("email", email))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).uniqueResult();
+
+        return  account.getAccRoles();
+    }
+
+    @Override
+    public String getUserNameByEmail(String email){
+        Account account = (Account) sessionFactory.getCurrentSession()
+                .createCriteria(Account.class)
+                .add(Restrictions.eq("email", email))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).uniqueResult();
+
+        return  account.getUserName();
+    }
+
+    @Override
     public Account createAccount(Account acc) {
         /*// Find the user role
         Query query = emgr.createQuery("SELECT r FROM Role r WHERE r.role = :role");
@@ -133,6 +153,8 @@ public class AccountDaoImpl implements AccountDao {
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).uniqueResult();
         return test;
     }
+
+
 
     @Override
     public Test setTestWord(Account acc, String testWord) {

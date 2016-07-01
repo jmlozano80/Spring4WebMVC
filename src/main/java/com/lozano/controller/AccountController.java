@@ -29,7 +29,7 @@ public class AccountController {
 
     @RequestMapping(value = "/api/user", method = RequestMethod.GET, produces = "application/json")
     public String user(Principal user) {
-        System.out.println("Inside api/user");
+        System.out.println("Inside api/user "+user);
         if (user != null)
             System.out.println("User is authenticated : " + user.getName());
         JSONObject jsonObject = new JSONObject();
@@ -43,6 +43,27 @@ public class AccountController {
 
         JSONObject jsonObject =  new JSONObject();
         jsonObject.put("test","test");
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "/api/username", method = RequestMethod.GET, produces = "application/json")
+    public String userName(Principal user) {
+        System.out.println("Inside api/user");
+        if (user != null)
+            System.out.println("User is authenticated : " + user.getName());
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("userName", (user != null) ? accountService.getUserNameByEmail(user.getName()) : "");
+        return jsonObject.toString();
+    }
+    @RequestMapping(value = "/api/isadmin", method = RequestMethod.GET, produces = "application/json")
+    public String isUserAdmin(Principal user) {
+        System.out.println("Inside api/isadmin");
+        if (user != null)
+            System.out.println("User is authenticated : " + user.getName());
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("isAdmin", (user != null) ? accountService.isUserAdmin(user.getName()) : "");
         return jsonObject.toString();
     }
 }

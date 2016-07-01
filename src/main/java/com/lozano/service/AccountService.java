@@ -21,5 +21,7 @@ public interface AccountService {
     public String encodePassword(String password);
     public Test getTest(Account acc);
     public Test setTest(Account acc, String testWord);
+    public String getUserNameByEmail(String email);
+    public boolean isUserAdmin(String email);
 }
 

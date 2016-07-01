@@ -281,6 +281,7 @@ public class AccountRegistrationController {
         Account newAcc = new Account();
         newAcc.setEmail(registrationForm.getEmail());
         newAcc.setPassword(registrationForm.getPassword());
+        newAcc.setUserName(registrationForm.getUserName());
 
         try {// Attempt acc creation
             Account acc = accountService.createAccount(newAcc);

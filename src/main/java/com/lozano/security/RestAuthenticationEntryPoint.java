@@ -1,5 +1,8 @@
 package com.lozano.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import javax.servlet.ServletException;
@@ -12,6 +15,9 @@ import java.io.IOException;
  */
 public class RestAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
 
+    @Autowired
+    MessageSource messageSource;
+
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) req;
@@ -23,6 +29,10 @@ public class RestAuthenticationEntryPoint extends BasicAuthenticationEntryPoint 
         System.out.println("2INSIDE RESTAUTHENTRYPOINT");
         /*response.addHeader("Access-Control-Allow-Origin", "*");*/
         response.addHeader("WWW-Authenticate", "RestBasic realm=\"" + getRealmName() + "\"");
+        if (authException instanceof DisabledException) {
+                response.setHeader("error", messageSource.getMessage("login.disabled", null, httpRequest.getLocale()));
+            System.out.println("ACOOUNT DISABLED");
+        }
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentLength(0);
     }

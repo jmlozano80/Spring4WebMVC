@@ -16,6 +16,7 @@ public class Account {
 
     private String password;
     private String email;
+    private String userName;
     private boolean enabled;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -34,9 +35,11 @@ public class Account {
     @Column(name = "sign_in_provider", length = 20)
     private SocialMediaEnum signInProvider;*/
 
-    public Account(String email, String password) {
+    public Account(String email, String password, String userName) {
         this.password = password;
         this.email = email;
+        this.userName = userName;
+
     }
 
     public Account() {
@@ -50,6 +53,10 @@ public class Account {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getUserName(){ return userName;}
+
+    public void  setUserName(String userName){this.userName = userName; }
 
     public String getPassword() {
         return password;

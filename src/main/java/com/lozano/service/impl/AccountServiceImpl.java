@@ -1,9 +1,6 @@
 package com.lozano.service.impl;
 
-import com.lozano.model.Account;
-import com.lozano.model.PasswordResetToken;
-import com.lozano.model.Test;
-import com.lozano.model.VerificationToken;
+import com.lozano.model.*;
 import com.lozano.dao.AccountDao;
 import com.lozano.dao.PasswordResetTokenDao;
 import com.lozano.dao.VerificationTokenDao;
@@ -14,6 +11,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 /**
  * Created by jose on 14/05/16.
@@ -51,6 +50,25 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Test setTest(Account acc, String testWord) {
         return accountDao.setTestWord(acc, testWord);
+    }
+
+    @Override
+    public String getUserNameByEmail(String email){
+        return accountDao.getUserNameByEmail(email);
+    }
+
+    @Override
+    public boolean isUserAdmin(String email){
+        boolean isAdmin = false;
+        Set<Role> userRoles =accountDao.getUserRoles(email);
+
+        for(Role r : userRoles){
+            System.out.println("ROLE: "+r);
+            if(r.getRole().equals("ROLE_ADMIN")){
+                isAdmin = true;
+            }
+        }
+        return isAdmin;
     }
 
     @Override

@@ -86,6 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/api*").authenticated()
                 .and()
+                .authorizeRequests().antMatchers("/admin*").hasRole("ROLE_ADMIN")
+                .and()
                 .httpBasic().authenticationEntryPoint(basicAuthenticationEntryPoint())
                 .and().csrf().disable();
 
