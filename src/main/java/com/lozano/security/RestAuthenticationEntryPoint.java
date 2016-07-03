@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * Created by jose on 14/05/16.
@@ -21,6 +22,21 @@ public class RestAuthenticationEntryPoint extends BasicAuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest req, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) req;
+
+        Enumeration<String> headerNamesEnum = httpRequest.getHeaderNames();
+        while (headerNamesEnum.hasMoreElements()) {
+            String headerName = headerNamesEnum.nextElement().toString();
+            String headerValue = httpRequest.getHeader(headerName);
+            System.out.println("Header name: " + headerName + " headerValue: " + headerValue);
+        }
+
+        if (req instanceof HttpServletRequest && httpRequest.getHeader("Authorization") != null)  {
+            System.out.println("Authorization is present");
+        }else {
+            System.out.println("Authorization is NOT present");
+        }
+
+
         if (req instanceof HttpServletRequest && httpRequest.getHeader("Origin") != null)  {
             response.setHeader("Access-Control-Allow-Origin", httpRequest.getHeader("Origin"));
         } else {

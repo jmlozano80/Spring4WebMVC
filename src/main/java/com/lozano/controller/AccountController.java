@@ -27,7 +27,7 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
-    @RequestMapping(value = "/api/user", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/user", method = RequestMethod.GET, produces = "application/json")
     public String user(Principal user) {
         System.out.println("Inside api/user "+user);
         if (user != null)

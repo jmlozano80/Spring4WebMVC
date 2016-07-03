@@ -82,14 +82,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().enableSessionUrlRewriting(false).sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/api*").permitAll()
+                .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/api/*").permitAll()
                 .and()
-                .authorizeRequests().antMatchers("/api*").authenticated()
+                .authorizeRequests().antMatchers("/api/*").authenticated()
                 .and()
-                .authorizeRequests().antMatchers("/admin*").hasRole("ROLE_ADMIN")
+                .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/admin/*").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/admin/*").hasRole("ADMIN")
                 .and()
                 .httpBasic().authenticationEntryPoint(basicAuthenticationEntryPoint())
                 .and().csrf().disable();
+
+
 
     }
 }
